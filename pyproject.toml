@@ -1,0 +1,64 @@
+[tool.poetry]
+name = "src"
+version = "0.0.1"
+readme = "readme.md"
+authors = ["Carlos A P Ipia <caanpaip@gmail.com>"]
+description = "Repositorio para projeto de MBA USP"
+
+[tool.poetry.dependencies]
+python = "3.11.*"
+pandas = "2.2.*"
+ipykernel = "*"
+envyaml="1.10.211231"
+openai="*"
+python-dotenv="1.0.1"
+pyarrow="16.0.0"
+tiktoken="0.7.0"
+torch="2.6.0"
+datasets="*"
+emoji="2.12.1"
+transformers="*"
+scikit-learn="*"
+# seaborn="*"
+# bertopic="*"
+loguru = "^0.7.2"
+google-genai = "*"
+google-generativeai = "^0.8.2"
+langchain-groq = "*"
+crewai = "*"
+
+
+## poetry run pip install transformers[torch] ## para instalar transformers con torch
+
+[tool.poetry.group.dev.dependencies]
+ruff = "^0.6.9"
+pytest = "^8.3.3"
+jupyter = "^1.1.1"
+pytest-cov = "^5.0.0"
+taskipy = "^1.13.0"
+ipynbname = "^2024.1.0.0"
+
+
+[tool.ruff]
+line-length = 110
+extend-exclude = ['Notebooks','prompt_sentiments.py']
+
+[tool.ruff.lint]
+preview = true
+select = ['I','F','E','W','PL','PT']
+
+[tool.ruff.format]
+preview = true
+quote-style = 'double'
+
+[tool.taskipy.tasks]
+lint = 'ruff check . && ruff check . --diff'
+format = 'ruff check . --fix && ruff format .'
+
+pre_test = 'task lint'
+test = 'pytest  --cov=.\src -vv --cov-report  term-missing --cov-report html'
+post_test = 'coverage html'
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.masory.api"
